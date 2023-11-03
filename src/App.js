@@ -1,8 +1,10 @@
-import './scss/app.scss';
+import React from 'react';
+
 import Header from './components/Header';
-import Categories from './components/Categories';
-import Sort from './components/Sort';
-import PizzaBlock from './components/PizzaBlock';
+import {Home} from "./pages/Home";
+
+import './scss/app.scss';
+import {NotFoundPage} from "./pages/NotFoundPage";
 
 function App() {
   return (
@@ -11,17 +13,8 @@ function App() {
         <Header />
         <div className="content">
           <div className="container">
-            <div className="content__top">
-              <Categories />
-
-              <Sort />
-            </div>
-            <h2 className="content__title">Все пиццы</h2>
-
-            <div className="content__items">
-              <PizzaBlock title="Мексиканская" price={350} />
-              <PizzaBlock title="Мясная" price={350} />
-            </div>
+            <NotFoundPage />
+            {/*<Home />*/}
           </div>
         </div>
       </div>
