@@ -5,9 +5,11 @@ import Sort from "../components/Sort";
 import {Skeleton} from "../components/PizzaBlock/Skeleton";
 import PizzaBlock from "../components/PizzaBlock";
 
-export const Home = () => {
+export const Home = ({searchValue}) => {
     const [items, setItems] = React.useState([]);
     const [isLoading, setIsLoading] = React.useState(true);
+
+    // Filtration and Sort without axios start
     const [categoryId, setCategoryId] = React.useState(0);
     const [sortType, setSortType] = React.useState({
         name: 'популярности',
@@ -20,17 +22,19 @@ export const Home = () => {
         const sortBy = sortType.sortProperty.replace('-', '');
         const order = sortType.sortProperty.includes('-') ? 'asc' : 'desc';
         const category = categoryId > 0 ? `category=${categoryId}` : '';
+        const search = searchValue ? `&search=${searchValue}` : '';
 
-        fetch(`https://653777febb226bb85dd34805.mockapi.io/items?${category}&sortBy=${sortBy}&order=${order})`)
+        fetch(`https://653777febb226bb85dd34805.mockapi.io/items?${category}&sortBy=${sortBy}&order=${order}${search})`)
             .then((res) => res.json())
             .then((arr) => {
                 setItems(arr);
                 setIsLoading(false);
             })
         window.scrollTo( 0, 0);
-    }, [categoryId, sortType])
+    }, [categoryId, sortType, searchValue])
 
-    // console.log('aizh', sortType);
+    // Filtration and Sort without axios end
+
     return (
         <div className="container">
             <div className="content__top">
