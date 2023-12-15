@@ -1,21 +1,26 @@
 import React from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {setSortType} from "../redux/filter/filterSlice";
 
-function Sort({value, onChangeSort}) {
-    const sortList = [
-        { name: 'популярности DESC', sortProperty: 'rating',},
-        { name: 'популярности ASC', sortProperty: '-rating',},
-        { name: 'цене DESC', sortProperty: 'price',},
-        { name: 'цене ASC', sortProperty: '-price',},
-        { name: 'алфавиту DESC', sortProperty: 'title',},
-        { name: 'алфавиту ASC', sortProperty: '-title',}
-    ];
+const sortList = [
+    { name: 'популярности DESC', sortProperty: 'rating',},
+    { name: 'популярности ASC', sortProperty: '-rating',},
+    { name: 'цене DESC', sortProperty: 'price',},
+    { name: 'цене ASC', sortProperty: '-price',},
+    { name: 'алфавиту DESC', sortProperty: 'title',},
+    { name: 'алфавиту ASC', sortProperty: '-title',}
+];
+
+function Sort() {
     const [open, setOpen] = React.useState(false);
+    const dispatch = useDispatch()
+    const sortType = useSelector((state) => state.filter.sortType);
 
-
-    const SortItemNamesHandle = (i) => {
-        onChangeSort(i)
+    const onClickHandle = (obj) => {
+       dispatch(setSortType(obj))
         setOpen(false);
     }
+
     return (
     <div className="sort">
       <div className="sort__label">
@@ -31,8 +36,7 @@ function Sort({value, onChangeSort}) {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setOpen(!open) }>{value.name}</span>
-          {/*{sortName}*/}
+        <span onClick={() => setOpen(!open) }>{sortType.name}</span>
       </div>
         {
             open && (
@@ -40,8 +44,8 @@ function Sort({value, onChangeSort}) {
             <ul>
                 {
                     sortList.map( (obj, i) =>
-                        <li key = {i} onClick = {() => SortItemNamesHandle(obj)}
-                            className = {value.sortTypeProperty === obj.sortProperty ? 'active' : ''}>
+                        <li key = {i} onClick = {() => onClickHandle(obj)}
+                            className = {sortType.sortProperty === obj.sortProperty ? 'active' : ''}>
                             {obj.name}
                         </li>
                     )}
