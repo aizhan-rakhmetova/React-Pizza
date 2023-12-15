@@ -2,7 +2,7 @@ import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {setSortType} from "../redux/filter/filterSlice";
 
-const sortList = [
+export const sortList = [
     { name: 'популярности DESC', sortProperty: 'rating',},
     { name: 'популярности ASC', sortProperty: '-rating',},
     { name: 'цене DESC', sortProperty: 'price',},
