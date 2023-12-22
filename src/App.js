@@ -6,7 +6,7 @@ import {Home} from "./pages/Home";
 import './scss/app.scss';
 import {NotFoundPage} from "./pages/NotFoundPage";
 import {Routes, Route} from "react-router-dom";
-import {Cart} from "./pages/Cart";
+import Cart from "./pages/Cart";
 
 export const SearchContext = React.createContext();
 function App() {

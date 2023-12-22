@@ -8,16 +8,32 @@ import {Pagination} from "../components/Pagination";
 import {SearchContext} from "../App";
 import { useSelector, useDispatch } from 'react-redux'
 import {useNavigate} from 'react-router-dom';
-import {setCategoryId, setCurrentPage, setFilter} from "../redux/filter/filterSlice";
+import {setCategoryId, setCurrentPage, setFilters} from "../redux/filter/filterSlice";
 import axios from "axios";
 import qs from "qs";
 
 export const Home = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const isSearch = React.useRef(false);
+    const isMounted = React.useRef(false);
     const { categoryId, sortType, currentPage }  = useSelector((state) => state.filter);
     const sortProperty = sortType.sortProperty;
 
+    //Если был первый рендер и если изменили паратметры
+    React.useEffect( () => {
+        if(isMounted.current){
+            const queryString = qs.stringify({
+                categoryId,
+                sort: sortType.sortProperty,
+                currentPage,
+            })
+            navigate(`?${queryString}`);
+        }
+        isMounted.current = true;
+    }, [categoryId, sortType.sortProperty, currentPage])
+
+    // Если был первый рендер, то проверяем url-параметры и сохраняем в редаксе
     React.useEffect( () => {
         if(window.location.search) {
             const params = qs.parse(window.location.search.substring(1));
@@ -25,10 +41,10 @@ export const Home = () => {
             const sortObj = sortList.find( obj =>
                 obj.sortProperty === params.sort)
 
-            dispatch(setFilter({
+            dispatch(setFilters({
                 ...params, sortObj
             }))
-
+            isSearch.current = true;
         }
     }, [])
 
@@ -41,7 +57,7 @@ export const Home = () => {
     const [items, setItems] = React.useState([]);
     const [isLoading, setIsLoading] = React.useState(true);
 
-    const fetchPizzas = () => {
+    const fetchPizzas = async() => {
         setIsLoading(true);
 
         const sortBy = sortProperty.replace('-', '');
@@ -49,29 +65,31 @@ export const Home = () => {
         const category = categoryId > 0 ? `category=${categoryId}` : '';
         const search = searchValue ? `&search=${searchValue}` : '';
 
-        axios
-            .get(
-                `https://653777febb226bb85dd34805.mockapi.io/items?&page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
-            ).then( (response) => {
+        try {
+            const response = await axios
+                .get(
+                    `https://653777febb226bb85dd34805.mockapi.io/items?&page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
+                );
             setItems(response.data);
+            console.log(response.data)
+        } catch(error) {
+            console.log('error', error)
+        } finally {
             setIsLoading(false);
-        })
+        }
     }
 
-    React.useEffect( () => {
-        const queryString = qs.stringify({
-            categoryId,
-            sort: sortType.sortProperty,
-            currentPage,
-        })
-        navigate(`?${queryString}`);
-        // console.log(queryString)
-    }, [categoryId, sortType.sortProperty, currentPage])
 
-    React.useEffect( () => {
-        fetchPizzas();
 
+
+    // Если был первый рендер, то запрашиваем пиццы
+    React.useEffect( () => {
         window.scrollTo( 0, 0);
+
+        if(!isSearch.current) {
+            fetchPizzas();
+        }
+        isSearch.current = false;
     }, [categoryId, sortProperty, searchValue, currentPage])
 
     // Filtration and Sort without axios end
