@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+
+
 const initialState = {
     totalPrice: 0,
     items: [],
@@ -35,13 +37,14 @@ export const cartSlice = createSlice({
         },
         removeTotalItem: (state, action) => {
             state.items.filter( (obj) => obj.id !== action.payload);
-            console.log(action.payload, state.items, 'aizhan')
         },
         clearCart: (state) => {
             state.items = [];
         },
     },
 })
+
+export const selectCart = (state) => state.cart;
 
 // Action creators are generated for each case reducer function
 export const { addItem, removeItem,

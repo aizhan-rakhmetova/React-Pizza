@@ -1,6 +1,7 @@
 import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {addItem} from '../../redux/filter/cartSlice';
+import {selectPizzaData} from "../../redux/filter/pizzaSlice";
 
 function Index({id, title, price, imageUrl, sizes, types}) {
 
@@ -11,7 +12,7 @@ function Index({id, title, price, imageUrl, sizes, types}) {
 
   const dispatch = useDispatch()
 
-  const cartItem = useSelector( (state) => state.cart.items.find( (obj) => obj.id === id))
+  const cartItem = useSelector(selectPizzaData(id))
 
   const addedCount = cartItem ? cartItem.count : 0;
 

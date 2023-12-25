@@ -7,10 +7,11 @@ import PizzaBlock from "../components/PizzaBlock";
 import {Pagination} from "../components/Pagination";
 import {SearchContext} from "../App";
 import { useSelector, useDispatch } from 'react-redux'
-import {useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {setCategoryId, setCurrentPage, setFilters} from "../redux/filter/filterSlice";
-import axios from "axios";
 import qs from "qs";
+import {fetchPizzaItems} from "../redux/filter/pizzaSlice";
+
 
 export const Home = () => {
     const dispatch = useDispatch()
@@ -18,6 +19,7 @@ export const Home = () => {
     const isSearch = React.useRef(false);
     const isMounted = React.useRef(false);
     const { categoryId, sortType, currentPage }  = useSelector((state) => state.filter);
+    const { items, status }  = useSelector((state) => state.pizza);
     const sortProperty = sortType.sortProperty;
 
     //Если был первый рендер и если изменили паратметры
@@ -54,32 +56,27 @@ export const Home = () => {
     }
 
     const { searchValue } = React.useContext(SearchContext);
-    const [items, setItems] = React.useState([]);
-    const [isLoading, setIsLoading] = React.useState(true);
 
     const fetchPizzas = async() => {
-        setIsLoading(true);
 
         const sortBy = sortProperty.replace('-', '');
         const order = sortProperty.includes('-') ? 'asc' : 'desc';
         const category = categoryId > 0 ? `category=${categoryId}` : '';
         const search = searchValue ? `&search=${searchValue}` : '';
 
-        try {
-            const response = await axios
-                .get(
-                    `https://653777febb226bb85dd34805.mockapi.io/items?&page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
-                );
-            setItems(response.data);
-            console.log(response.data)
-        } catch(error) {
-            console.log('error', error)
-        } finally {
-            setIsLoading(false);
-        }
+        dispatch(fetchPizzaItems({
+                    sortBy, order, category, search, currentPage
+                }))
+
+        // try {
+        //
+        //     // dispatch(setItems(data));
+        // } catch(error) {
+        //     console.log('error', error)
+        // } finally {
+        //     setIsLoading(false);
+        // }
     }
-
-
 
 
     // Если был первый рендер, то запрашиваем пиццы
@@ -107,9 +104,13 @@ export const Home = () => {
             <h2 className="content__title">Все пиццы</h2>
             <div className="content__items">
                 {
-                    isLoading
+                    status === 'loading'
                         ? [...new Array(6)].map( (_, index) => <Skeleton key = {index} />)
-                        :  items.map( (obj)=> <PizzaBlock key = {obj.id} {...obj} />)
+                        :  items.map( (obj)=>
+                            <Link key = {obj.id} to={`/pizza/${obj.id}`}>
+                                <PizzaBlock {...obj} />
+                            </Link>
+                        )
                 }
             </div>
             <Pagination onChangePage={onChangePage} />
