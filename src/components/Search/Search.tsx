@@ -1,23 +1,22 @@
-import React from 'react';
-
+import debounce from 'lodash.debounce';
 import styles from './Search.module.scss';
 import SearchIcon from '../../assets/img/search-icon.svg';
 import DeleteIcon from '../../assets/img/delete-icon.svg'
-import { SearchContext } from "../../App";
-import debounce from 'lodash.debounce';
+import { SearchContext } from "../../App.tsx";
+import {FC, useCallback, useContext, useRef, useState} from "react";
 
-function Search() {
-    const [value, setValue] = React.useState('');
-    const { setSearchValue } = React.useContext(SearchContext);
-    const inputRef = React.useRef();
+const Search: FC = () => {
+    const [value, setValue] = useState('');
+    const { setSearchValue } = useContext(SearchContext);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const onClickClear = () => {
         setSearchValue('');
         setValue('');
-        inputRef.current.focus();
+        inputRef.current?.focus();
     }
 
-   const updateInputValue = React.useCallback(
+   const updateInputValue = useCallback(
        debounce( (string) => {
            setSearchValue(string);
        }, 1000),

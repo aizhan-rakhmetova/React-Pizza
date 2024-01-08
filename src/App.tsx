@@ -1,13 +1,13 @@
 import React from 'react';
 
-import Header from './components/Header';
-import {Home} from "./pages/Home";
+import Header from './components/Header.tsx';
+import {Home} from "./pages/Home.tsx";
 
 import './scss/app.scss';
-import {NotFoundPage} from "./pages/NotFoundPage";
+import {NotFoundPage} from "./pages/NotFoundPage.tsx";
 import {Routes, Route} from "react-router-dom";
-import Cart from "./pages/Cart";
-import {FullPizza} from "./pages/FullPizza";
+import Cart from "./pages/Cart.tsx";
+import {FullPizza} from "./pages/FullPizza.tsx";
 
 export const SearchContext = React.createContext();
 function App() {

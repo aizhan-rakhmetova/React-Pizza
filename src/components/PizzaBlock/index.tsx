@@ -1,14 +1,24 @@
-import React from 'react';
+import {FC, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {addItem} from '../../redux/filter/cartSlice';
 import {selectPizzaData} from "../../redux/filter/pizzaSlice";
 
-function Index({id, title, price, imageUrl, sizes, types}) {
+type PizzaBlockProps = {
+  id: string;
+  title: string;
+  price: number;
+  imageUrl: string;
+  sizes: number[];
+  types: number[];
+}
+
+const PizzaBlock: FC<PizzaBlockProps> = ({id, title, price,
+                                           imageUrl, sizes, types}) => {
 
   const typeNames= ['тонкое', 'традиционное'];
 
-  const [activeType, setActiveType] = React.useState(0);
-  const [activeSize, setActiveSize] = React.useState(0);
+  const [activeType, setActiveType] = useState<number>(0);
+  const [activeSize, setActiveSize] = useState<number>(0);
 
   const dispatch = useDispatch()
 
@@ -82,4 +92,4 @@ function Index({id, title, price, imageUrl, sizes, types}) {
   );
 }
 
-export default Index;
+export default PizzaBlock;

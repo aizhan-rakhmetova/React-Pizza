@@ -1,17 +1,19 @@
 import PizzaLogo from '../assets/img/pizza-logo.svg';
 import {Link, useLocation} from "react-router-dom";
-import Search from "./Search/Search";
+import Search from "./Search/Search.tsx";
 import {useSelector} from "react-redux";
+import {FC} from "react";
 
-function Header() {
+
+const Header: FC = () => {
   const {totalPrice, items} = useSelector( (state) => state.cart)
-  const totalCount = items.reduce( (acc, item) => {
+  const totalCount = items.reduce( (acc: number, item: any) => {
     return acc + item.count
   }, 0)
 
   const location = useLocation();
 
-  console.log('location', location);
+  // console.log('location', location);
 
   return (
     <div className="header">

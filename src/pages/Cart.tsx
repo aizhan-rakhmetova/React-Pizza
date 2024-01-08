@@ -1,10 +1,10 @@
-import React from "react";
 import {Link} from "react-router-dom";
-import CartItem from "../components/CartItem";
+import CartItem from "../components/CartItem.tsx";
 import {useDispatch, useSelector} from "react-redux";
 import {clearCart, selectCart} from "../redux/filter/cartSlice";
+import {FC} from "react";
 
-const Cart = () => {
+const Cart: FC = () => {
     const dispatch = useDispatch();
     const { totalPrice, items } = useSelector(selectCart);
     // Does not work correctly

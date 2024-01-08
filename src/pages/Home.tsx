@@ -1,17 +1,16 @@
-import React from "react";
+import * as React from "react";
+import Categories from "../components/Categories.tsx";
+import Sort, {sortList} from "../components/Sort.tsx";
+import {Skeleton} from "../components/PizzaBlock/Skeleton.tsx";
 
-import Categories from "../components/Categories";
-import Sort, {sortList} from "../components/Sort";
-import {Skeleton} from "../components/PizzaBlock/Skeleton";
-import PizzaBlock from "../components/PizzaBlock";
-import {Pagination} from "../components/Pagination";
-import {SearchContext} from "../App";
+import {Pagination} from "../components/Pagination/index.tsx";
+import {SearchContext} from "../App.tsx";
 import { useSelector, useDispatch } from 'react-redux'
 import {Link, useNavigate} from 'react-router-dom';
 import {setCategoryId, setCurrentPage, setFilters} from "../redux/filter/filterSlice";
 import qs from "qs";
 import {fetchPizzaItems} from "../redux/filter/pizzaSlice";
-
+import PizzaBlock from "../components/PizzaBlock/index.tsx";
 
 export const Home = () => {
     const dispatch = useDispatch()
@@ -91,7 +90,7 @@ export const Home = () => {
 
     // Filtration and Sort without axios end
 
-    const onChangePage = (number) => {
+    const onChangePage = (number: number) => {
           dispatch(setCurrentPage(number));
     }
 

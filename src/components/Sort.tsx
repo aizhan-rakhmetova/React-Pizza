@@ -1,8 +1,12 @@
-import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {setSortType} from "../redux/filter/filterSlice";
+import {setSortType, selectSort} from "../redux/filter/filterSlice";
+import * as React from "react";
 
-export const sortList = [
+type SortItem = {
+    name: string;
+    sortProperty: string;
+}
+export const sortList: SortItem[] = [
     { name: 'популярности DESC', sortProperty: 'rating',},
     { name: 'популярности ASC', sortProperty: '-rating',},
     { name: 'цене DESC', sortProperty: 'price',},
@@ -14,16 +18,21 @@ export const sortList = [
 function Sort() {
     const [open, setOpen] = React.useState(false);
     const dispatch = useDispatch()
-    const sortType = useSelector((state) => state.filter.sortType);
-    const sortRef = React.useRef();
+    const sortType = useSelector(selectSort);
+    const sortRef = React.useRef<HTMLDivElement>(null);
 
-    const onClickHandle = (obj) => {
+    const onClickHandle = (obj: SortItem) => {
        dispatch(setSortType(obj))
         setOpen(false);
     }
 
+    // type PopupClick = React.MouseEvent<HTMLBodyElement> & {
+    //     path: Node[];
+    //     composedPath: () => Node[];
+    // } 24 video = custom type he used
+
     React.useEffect( () => {
-        const handleClickOutside = (event) => {
+        const handleClickOutside = (event: MouseEvent) => {
             const path = event.composedPath();
             if(!path.includes(sortRef.current)) {
                 setOpen(false);
@@ -51,7 +60,8 @@ function Sort() {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setOpen(!open) }>{sortType.name}</span>
+        <span onClick={() => setOpen(!open) }> fff </span>
+          {/*{sortType.name}*/}
       </div>
         {
             open && (
