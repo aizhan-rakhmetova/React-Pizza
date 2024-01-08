@@ -12,6 +12,8 @@ const Cart: FC = () => {
         dispatch(clearCart())
     }
 
+
+
     return (
         <div className="container container--cart">
             <div className="cart">

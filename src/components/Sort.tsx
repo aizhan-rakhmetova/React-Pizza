@@ -45,6 +45,7 @@ function Sort() {
 
     }, [])
 
+
     return (
     <div ref={sortRef} className="sort">
       <div className="sort__label">
