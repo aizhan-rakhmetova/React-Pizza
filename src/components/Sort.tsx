@@ -61,8 +61,7 @@ function Sort() {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setOpen(!open) }> fff </span>
-          {/*{sortType.name}*/}
+        <span onClick={() => setOpen(!open) }> {sortType.name} </span>
       </div>
         {
             open && (

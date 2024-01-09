@@ -1,5 +1,6 @@
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import axios from "axios";
+import {RootState} from "../store";
 
 export const fetchPizzaItems = createAsyncThunk(
     'pizza/fetchPizzaById', async (params) => {
@@ -12,7 +13,19 @@ export const fetchPizzaItems = createAsyncThunk(
     }
 )
 
-const initialState = {
+type PizzaItem = {
+    id: string;
+    imageUrl: string;
+    title: string;
+    type: string;
+    count: number;
+    price: number;
+}
+interface PizzaSliceState {
+    items: PizzaItem[];
+    status: 'loading' | 'error' | 'success';
+}
+const initialState: PizzaSliceState = {
     items: [],
     status: 'loading',
 }
@@ -21,7 +34,7 @@ export const pizzaSlice = createSlice({
     name: 'pizza',
     initialState,
     reducers: {
-        setItems(state, action) {
+        setItems(state, action: PayloadAction<PizzaItem[]>) {
             state.items = action.payload;
         }
     },
@@ -45,8 +58,8 @@ export const pizzaSlice = createSlice({
     }
 })
 
-export const selectPizzaData = (id) =>
-    (state) => state.cart.items.find( (obj) => obj.id === id)
+export const selectPizzaData = (id: string) =>
+    (state: RootState) => state.cart.items.find( (obj) => obj.id === id)
 
 export const { setItems } = pizzaSlice.actions
 

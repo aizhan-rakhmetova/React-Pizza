@@ -1,6 +1,6 @@
 import {FC, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {addItem} from '../../redux/filter/cartSlice';
+import {addItem, CartItemsType} from '../../redux/filter/cartSlice';
 import {selectPizzaData} from "../../redux/filter/pizzaSlice";
 
 type PizzaBlockProps = {
@@ -27,7 +27,7 @@ const PizzaBlock: FC<PizzaBlockProps> = ({id, title, price,
   const addedCount = cartItem ? cartItem.count : 0;
 
   const clickHandler = () => {
-    const items =  {
+    const items: CartItemsType =  {
       id,
       title,
       price,
