@@ -2,18 +2,27 @@ import PizzaLogo from '../assets/img/pizza-logo.svg';
 import {Link, useLocation} from "react-router-dom";
 import Search from "./Search/Search.tsx";
 import {useSelector} from "react-redux";
-import {FC} from "react";
+import * as React from "react";
 
 
-const Header: FC = () => {
+const Header: React.FC = () => {
   const {totalPrice, items} = useSelector( (state) => state.cart)
   const totalCount = items.reduce( (acc: number, item: any) => {
     return acc + item.count
   }, 0)
 
   const location = useLocation();
+  const isMounted = React.useRef(false);
 
-  // console.log('location', location);
+  React.useEffect(() => {
+    if(isMounted.current) {
+      const json = JSON.stringify(items);
+      localStorage.setItem('cart', json);
+    }
+
+    isMounted.current = true;
+  }, [items])
+
 
   return (
     <div className="header">
@@ -25,7 +34,7 @@ const Header: FC = () => {
             <p>самая вкусная пицца во вселенной</p>
           </div>
         </Link>
-        <Search />
+        {location.pathname !== '/cart' && <Search />}
         {
           location.pathname !== '/cart' && (
                 <div className="header__cart">

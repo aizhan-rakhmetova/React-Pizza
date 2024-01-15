@@ -3,22 +3,25 @@ import Categories from "../components/Categories.tsx";
 import Sort, {sortList} from "../components/Sort.tsx";
 import {Skeleton} from "../components/PizzaBlock/Skeleton.tsx";
 
-import {Pagination} from "../components/Pagination/index.tsx";
+
 import {SearchContext} from "../App.tsx";
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import {Link, useNavigate} from 'react-router-dom';
-import {setCategoryId, setCurrentPage, setFilters} from "../redux/filter/filterSlice";
+import {FilterStateSlice, setCategoryId, setCurrentPage, setFilters, SortType} from "../redux/filter/filterSlice.ts";
 import qs from "qs";
-import {fetchPizzaItems} from "../redux/filter/pizzaSlice";
+import {fetchPizzaItems, SearchPizzaParams} from "../redux/filter/pizzaSlice.ts";
 import PizzaBlock from "../components/PizzaBlock/index.tsx";
+import {RootState, useAppDispatch} from "../redux/store.ts";
+import {Pagination} from "../components/Pagination/index.tsx";
+
 
 export const Home = () => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const isSearch = React.useRef(false);
     const isMounted = React.useRef(false);
-    const { categoryId, sortType, currentPage }  = useSelector((state) => state.filter);
-    const { items, status }  = useSelector((state) => state.pizza);
+    const { categoryId, sortType, currentPage }  = useSelector((state: RootState) => state.filter);
+    const { items, status }  = useSelector((state: RootState) => state.pizza);
     const sortProperty = sortType.sortProperty;
 
     //Если был первый рендер и если изменили паратметры
@@ -37,24 +40,28 @@ export const Home = () => {
     // Если был первый рендер, то проверяем url-параметры и сохраняем в редаксе
     React.useEffect( () => {
         if(window.location.search) {
-            const params = qs.parse(window.location.search.substring(1));
+            const params = qs.parse(window.location.search.substring(1)) as unknown as SearchPizzaParams;
 
             const sortObj = sortList.find( obj =>
-                obj.sortProperty === params.sort)
+                obj.sortProperty === params.sortBy)
 
-            dispatch(setFilters({
-                ...params, sortObj
-            }))
+                dispatch(setFilters({
+                    searchValue: params.search,
+                    categoryId: Number(params.category),
+                    currentPage: Number(params.currentPage),
+                    sortType: sortObj ||  sortList[0]
+                }))
+
             isSearch.current = true;
         }
     }, [])
 
 
-    const onChangeCategory = (id) => {
+    const onChangeCategory = React.useCallback( (id: number) => {
         dispatch(setCategoryId(id));
-    }
+    }, []);
 
-    const { searchValue } = React.useContext(SearchContext);
+    const { searchValue } = React.useContext<any>(SearchContext);
 
     const fetchPizzas = async() => {
 
@@ -63,8 +70,9 @@ export const Home = () => {
         const category = categoryId > 0 ? `category=${categoryId}` : '';
         const search = searchValue ? `&search=${searchValue}` : '';
 
+        //Double check types here
         dispatch(fetchPizzaItems({
-                    sortBy, order, category, search, currentPage
+                    sortBy, order, category, search, currentPage: String(currentPage),
                 }))
 
         // try {
@@ -83,6 +91,7 @@ export const Home = () => {
         window.scrollTo( 0, 0);
 
         if(!isSearch.current) {
+            // dispatch(fetchPizzas({} as SearchPizzaParams));
             fetchPizzas();
         }
         isSearch.current = false;
@@ -106,9 +115,7 @@ export const Home = () => {
                     status === 'loading'
                         ? [...new Array(6)].map( (_, index) => <Skeleton key = {index} />)
                         :  items.map( (obj)=>
-                            <Link key = {obj.id} to={`/pizza/${obj.id}`}>
-                                <PizzaBlock {...obj} />
-                            </Link>
+                                <PizzaBlock {...obj} key = {obj.id}/>
                         )
                 }
             </div>
