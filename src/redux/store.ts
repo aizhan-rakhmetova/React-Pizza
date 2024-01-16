@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
 // @ts-ignore
-import filter from './filter/filterSlice.ts';
+import filter, {FilterStateSlice} from './filter/filterSlice.ts';
 // @ts-ignore
-import cart from './filter/cartSlice.ts';
+import cart, {CartSliceState} from './filter/cartSlice.ts';
 // @ts-ignore
-import pizza from './filter/pizzaSlice.ts';
+import pizza, {PizzaSliceState} from './filter/pizzaSlice.ts';
 import {useDispatch} from "react-redux";
 
 export const store = configureStore({
@@ -12,10 +12,16 @@ export const store = configureStore({
         filter,
         cart,
         pizza,
-    },
+    }
 })
 
-export type RootState = ReturnType<typeof store.getState>;
+// export type RootState = ReturnType<typeof store.getState>;
+
+export type RootState = {
+    filter: FilterStateSlice;
+    cart: CartSliceState;
+    pizza: PizzaSliceState;
+};
 
 type AppDispatch = typeof store.dispatch;
 export const useAppDispatch = () => useDispatch<AppDispatch>();

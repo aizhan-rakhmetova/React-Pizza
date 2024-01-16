@@ -12,7 +12,8 @@ import {FC, useCallback, useContext, useRef, useState} from "react";
 
 export const Search: FC = () => {
     const [value, setValue] = useState('');
-    const { setSearchValue } = useContext(SearchContext);
+    const { setSearchValue }: any = useContext(SearchContext);
+
     const inputRef = useRef<HTMLInputElement>(null);
 
     const onClickClear = () => {

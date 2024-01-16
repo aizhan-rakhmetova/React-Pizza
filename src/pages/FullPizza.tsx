@@ -1,9 +1,9 @@
 import {Link, useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
-import {FC, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
+import * as React from 'react';
 
-export const FullPizza: FC = () => {
-
+export const FullPizza: () => "Загрузка..." | React.JSX.Element = () => {
     const {id} = useParams();
     const navigate = useNavigate();
     const [pizza, setPizza] = useState<{

@@ -2,7 +2,8 @@ import {useDispatch} from "react-redux";
 import {FC} from "react";
 // @ts-ignore
 import {addItem, CartItemsType, removeItem, removeTotalItem} from "../redux/filter/cartSlice.ts";
-import * as clsx from 'clsx';
+// @ts-ignore
+import clsx from 'clsx';
 
 
 type CartItemProps = {

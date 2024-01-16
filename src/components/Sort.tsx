@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from "react-redux";
 // @ts-ignore
-import {selectSort, setSortType, SortPropertyEnum} from "../redux/filter/filterSlice.ts";
+import {selectSort, setSortType, SortPropertyEnum, SortType} from "../redux/filter/filterSlice.ts";
 import * as React from "react";
 
 export type SortItem = {
@@ -19,7 +19,7 @@ export const sortList: SortItem[] = [
 export const Sort: React.FC = () => {
     const [open, setOpen] = React.useState(false);
     const dispatch = useDispatch()
-    const sortType = useSelector(selectSort);
+    const sortType: SortType  = useSelector(selectSort);
     const sortRef = React.useRef<HTMLDivElement>(null);
 
     const onClickHandle = (obj: SortItem) => {

@@ -1,18 +1,25 @@
 import * as React from 'react';
-
+// @ts-ignore
 import {Header} from './components/Header.tsx';
+// @ts-ignore
 import {Home} from "./pages/Home.tsx";
 
 import './scss/app.scss';
+// @ts-ignore
 import {NotFoundPage} from "./pages/NotFoundPage.tsx";
 import {Routes, Route} from "react-router-dom";
-// import Cart from "./pages/Cart.tsx";
+// @ts-ignore
 import {FullPizza} from "./pages/FullPizza.tsx";
 
 // React lazy is only used for browser, if u use also server-side rendering, u need to use libraries like react-loadable or loadable-components
+// @ts-ignore
 const Cart = React.lazy(() => import(/* webpackChunkName: "Cart" */ './pages/Cart.tsx'));
 
-export const SearchContext = React.createContext();
+// type ContextType = {
+//     searchValue: string;
+//     setSearchValue: React.Dispatch<React.SetStateAction<string>>;
+// }
+export const SearchContext: any = React.createContext('');
 function App() {
     const [searchValue, setSearchValue] = React.useState('');
   return (

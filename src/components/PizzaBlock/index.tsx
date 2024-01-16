@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 // @ts-ignore
 import {addItem, CartItemsType} from '../../redux/filter/cartSlice.ts';
 // @ts-ignore
-import {selectPizzaData} from '../../redux/filter/pizzaSlice.ts';
+import {selectPizzaData} from '../../redux/filter/cartSlice.ts';
 import {Link} from "react-router-dom";
 import * as React from "react";
 
@@ -26,7 +26,7 @@ export const PizzaBlock: FC<PizzaBlockProps> = ({id, title, price,
 
   const dispatch = useDispatch()
 
-  const cartItem = useSelector(selectPizzaData(id))
+  const cartItem: CartItemsType = useSelector(selectPizzaData(id));
 
   const addedCount = cartItem ? cartItem.count : 0;
 
@@ -76,7 +76,7 @@ export const PizzaBlock: FC<PizzaBlockProps> = ({id, title, price,
             </ul>
           </div>
           <div className="pizza-block__bottom">
-            <div className="pizza-block__price">{price}</div>
+            <div className="pizza-block__price">от {price} ₽</div>
             <button onClick={clickHandler} className="button button--outline button--add">
               <svg
                   width="12"

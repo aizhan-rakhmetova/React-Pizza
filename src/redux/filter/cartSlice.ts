@@ -15,7 +15,7 @@ export type CartItemsType = {
     count: number;
 }
 
-interface CartSliceState {
+export interface CartSliceState {
     totalPrice: number;
     items: CartItemsType[];
 }
@@ -63,6 +63,8 @@ export const cartSlice = createSlice({
 })
 
 export const selectCart = (state: RootState) => state.cart;
+export const selectPizzaData = (id: string) =>
+    (state: RootState) => state.cart.items.find( (obj: CartItemsType) => obj.id === id)
 
 // Action creators are generated for each case reducer function
 export const { addItem, removeItem,

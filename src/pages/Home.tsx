@@ -14,7 +14,7 @@ import {useNavigate} from 'react-router-dom';
 import {setCategoryId, setCurrentPage, setFilters} from "../redux/filter/filterSlice.ts";
 import * as qs from "qs";
 // @ts-ignore
-import {fetchPizzaItems, SearchPizzaParams} from "../redux/filter/pizzaSlice.ts";
+import {fetchPizzaItems, PizzaItem, SearchPizzaParams} from "../redux/filter/pizzaSlice.ts";
 // @ts-ignore
 import {PizzaBlock} from "../components/PizzaBlock/index.tsx";
 // @ts-ignore
@@ -122,7 +122,7 @@ export const Home = () => {
                 {
                     status === 'loading'
                         ? [...new Array(6)].map( (_, index) => <Skeleton key = {index} />)
-                        :  items.map( (obj)=>
+                        :  items.map( (obj: PizzaItem)=>
                                 <PizzaBlock {...obj} key = {obj.id}/>
                         )
                 }

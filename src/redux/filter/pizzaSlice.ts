@@ -13,7 +13,7 @@ import {RootState} from "../store";
 //         return data as CartItemsType[];
 //     }
 
-type PizzaItem = {
+export type PizzaItem = {
     id: string;
     imageUrl: string;
     title: string;
@@ -27,7 +27,7 @@ export enum Status {
     SUCCESS = 'success',
     ERROR = 'error'
 }
-interface PizzaSliceState {
+export interface PizzaSliceState {
     items: PizzaItem[];
     status: Status;
 }
@@ -82,9 +82,6 @@ export const pizzaSlice = createSlice({
         })
     }
 })
-
-export const selectPizzaData = (id: string) =>
-    (state: RootState) => state.cart.items.find( (obj) => obj.id === id)
 
 export const { setItems } = pizzaSlice.actions
 

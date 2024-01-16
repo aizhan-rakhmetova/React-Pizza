@@ -5,10 +5,11 @@ import {Link, useLocation} from "react-router-dom";
 import {Search} from "./Search/Search.tsx";
 import {useSelector} from "react-redux";
 import * as React from "react";
+import {RootState} from "../redux/store";
 
 
 export const Header: React.FC = () => {
-  const {totalPrice, items} = useSelector( (state) => state.cart)
+  const {totalPrice, items} = useSelector( (state: RootState) => state.cart)
   const totalCount = items.reduce( (acc: number, item: any) => {
     return acc + item.count
   }, 0)
