@@ -1,6 +1,8 @@
 import {Link} from "react-router-dom";
-import CartItem from "../components/CartItem.tsx";
+// @ts-ignore
+import {CartItem} from "../components/CartItem.tsx";
 import {useDispatch, useSelector} from "react-redux";
+// @ts-ignore
 import {clearCart, selectCart} from "../redux/filter/cartSlice.ts";
 import {FC} from "react";
 

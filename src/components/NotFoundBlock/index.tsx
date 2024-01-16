@@ -1,3 +1,4 @@
+// @ts-ignore
 import styles from './NotFoundBlock.module.scss';
 import {FC} from "react";
 

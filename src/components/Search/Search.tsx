@@ -1,11 +1,16 @@
-import debounce from 'lodash.debounce';
+// @ts-ignore
+import * as debounce from 'lodash.debounce';
+// @ts-ignore
 import styles from './Search.module.scss';
+// @ts-ignore
 import SearchIcon from '../../assets/img/search-icon.svg';
+// @ts-ignore
 import DeleteIcon from '../../assets/img/delete-icon.svg'
+// @ts-ignore
 import { SearchContext } from "../../App.tsx";
 import {FC, useCallback, useContext, useRef, useState} from "react";
 
-const Search: FC = () => {
+export const Search: FC = () => {
     const [value, setValue] = useState('');
     const { setSearchValue } = useContext(SearchContext);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -45,4 +50,4 @@ const Search: FC = () => {
     );
 }
 
-export default Search;
+

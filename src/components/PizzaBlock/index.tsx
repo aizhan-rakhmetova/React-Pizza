@@ -1,6 +1,8 @@
 import {FC, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
+// @ts-ignore
 import {addItem, CartItemsType} from '../../redux/filter/cartSlice.ts';
+// @ts-ignore
 import {selectPizzaData} from '../../redux/filter/pizzaSlice.ts';
 import {Link} from "react-router-dom";
 import * as React from "react";
@@ -14,7 +16,7 @@ type PizzaBlockProps = {
   types?: number[];
 }
 
-const PizzaBlock: FC<PizzaBlockProps> = ({id, title, price,
+export const PizzaBlock: FC<PizzaBlockProps> = ({id, title, price,
                                            imageUrl, sizes, types}) => {
 
   const typeNames= ['тонкое', 'традиционное'];
@@ -97,4 +99,4 @@ const PizzaBlock: FC<PizzaBlockProps> = ({id, title, price,
   );
 }
 
-export default PizzaBlock;
+

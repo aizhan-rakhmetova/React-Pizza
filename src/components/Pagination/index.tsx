@@ -1,4 +1,5 @@
 import ReactPaginate from 'react-paginate';
+// @ts-ignore
 import styles from './Pagination.module.scss';
 import {FC} from "react";
 

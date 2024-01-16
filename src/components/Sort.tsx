@@ -1,4 +1,5 @@
 import {useDispatch, useSelector} from "react-redux";
+// @ts-ignore
 import {selectSort, setSortType, SortPropertyEnum} from "../redux/filter/filterSlice.ts";
 import * as React from "react";
 
@@ -15,7 +16,7 @@ export const sortList: SortItem[] = [
     { name: 'алфавиту ASC', sortProperty: SortPropertyEnum.TITLE_ASC,}
 ];
 
-const Sort: React.FC = () => {
+export const Sort: React.FC = () => {
     const [open, setOpen] = React.useState(false);
     const dispatch = useDispatch()
     const sortType = useSelector(selectSort);
@@ -83,4 +84,4 @@ const Sort: React.FC = () => {
 }
 
 
-export default Sort;
+

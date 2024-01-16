@@ -1,17 +1,25 @@
 import * as React from "react";
-import Categories from "../components/Categories.tsx";
-import Sort, {sortList} from "../components/Sort.tsx";
+// @ts-ignore
+import {Categories} from "../components/Categories.tsx";
+// @ts-ignore
+import {Sort,  sortList} from "../components/Sort.tsx";
+// @ts-ignore
 import {Skeleton} from "../components/PizzaBlock/Skeleton.tsx";
 
-
+// @ts-ignore
 import {SearchContext} from "../App.tsx";
 import { useSelector } from 'react-redux'
-import {Link, useNavigate} from 'react-router-dom';
-import {FilterStateSlice, setCategoryId, setCurrentPage, setFilters, SortType} from "../redux/filter/filterSlice.ts";
-import qs from "qs";
+import {useNavigate} from 'react-router-dom';
+// @ts-ignore
+import {setCategoryId, setCurrentPage, setFilters} from "../redux/filter/filterSlice.ts";
+import * as qs from "qs";
+// @ts-ignore
 import {fetchPizzaItems, SearchPizzaParams} from "../redux/filter/pizzaSlice.ts";
-import PizzaBlock from "../components/PizzaBlock/index.tsx";
+// @ts-ignore
+import {PizzaBlock} from "../components/PizzaBlock/index.tsx";
+// @ts-ignore
 import {RootState, useAppDispatch} from "../redux/store.ts";
+// @ts-ignore
 import {Pagination} from "../components/Pagination/index.tsx";
 
 
@@ -57,9 +65,9 @@ export const Home = () => {
     }, [])
 
 
-    const onChangeCategory = React.useCallback( (id: number) => {
+    const onChangeCategory = (id: number) => {
         dispatch(setCategoryId(id));
-    }, []);
+    }
 
     const { searchValue } = React.useContext<any>(SearchContext);
 

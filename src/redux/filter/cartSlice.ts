@@ -1,6 +1,8 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 import {RootState} from "../store";
+// @ts-ignore
 import {getCartFromLS} from "../../utils/getCartFromLS.ts";
+// @ts-ignore
 import {calcTotalPrice} from "../../utils/calcTotalPrice.ts";
 
 export type CartItemsType = {

@@ -1,3 +1,4 @@
+// @ts-ignore
 import {calcTotalPrice} from "./calcTotalPrice.ts";
 
 export const getCartFromLS = () => {

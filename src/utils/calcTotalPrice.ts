@@ -1,3 +1,4 @@
+// @ts-ignore
 import {CartItemsType} from "../redux/filter/cartSlice.ts";
 
 export const calcTotalPrice = (items: CartItemsType[]) => {

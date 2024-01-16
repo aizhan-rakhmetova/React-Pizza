@@ -1,7 +1,8 @@
 import {useDispatch} from "react-redux";
 import {FC} from "react";
+// @ts-ignore
 import {addItem, CartItemsType, removeItem, removeTotalItem} from "../redux/filter/cartSlice.ts";
-import clsx from 'clsx';
+import * as clsx from 'clsx';
 
 
 type CartItemProps = {
@@ -12,7 +13,7 @@ type CartItemProps = {
     count: number;
     price: number;
 }
-const CartItem: FC<CartItemProps> = ({id, imageUrl, title,
+export const CartItem: FC<CartItemProps> = ({id, imageUrl, title,
                                          type, count, price}) => {
     const dispatch = useDispatch();
 
@@ -76,4 +77,3 @@ const CartItem: FC<CartItemProps> = ({id, imageUrl, title,
     )
 }
 
-export default CartItem;

@@ -1,11 +1,13 @@
+// @ts-ignore
 import PizzaLogo from '../assets/img/pizza-logo.svg';
 import {Link, useLocation} from "react-router-dom";
-import Search from "./Search/Search.tsx";
+// @ts-ignore
+import {Search} from "./Search/Search.tsx";
 import {useSelector} from "react-redux";
 import * as React from "react";
 
 
-const Header: React.FC = () => {
+export const Header: React.FC = () => {
   const {totalPrice, items} = useSelector( (state) => state.cart)
   const totalCount = items.reduce( (acc: number, item: any) => {
     return acc + item.count
@@ -80,4 +82,4 @@ const Header: React.FC = () => {
   );
 }
 
-export default Header;
+
