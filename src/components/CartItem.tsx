@@ -27,7 +27,7 @@ export const CartItem: FC<CartItemProps> = ({id, imageUrl, title,
     const onClickRemove = () => {
         dispatch(removeItem(id))
     }
-   // Does not work correctly
+   // Does not work correctly, check it
    const HandleDelete = () => {
        dispatch(removeTotalItem(id))
    }
